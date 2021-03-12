@@ -1,0 +1,175 @@
+#include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+using namespace std;
+
+class Point {
+public:
+    int x, y;
+
+    Point(int a, int b) {
+        x = a;
+        y = b;
+    }
+    ///Point(int a, int b): x(a),y(b) { }
+    Point() :x(0), y(0){}   //null생성자
+    //Point(){}   //쓰레기값 나옴
+    
+    int getx() { return x; }
+    void setx(int a) { x = a; }
+    int gety() { return y; }
+    void sety(int a) { y = a; }
+    
+    //연산자 오버로딩, + 연산
+    Point operator+(int n) {
+        return Point(this->x + n, this->y + n); //굳이 this안써도 됨
+    }
+    Point operator+(Point pp) { return Point(x + pp.x, y + pp.y); }
+    //현재 들어있는 값(this->x)은 그대로 두는게 좋다
+   
+    /*Point operator+(Point pp) { 
+        Point p;
+        p.setx(pp.x + this->x);
+        p.sety(pp.y + this->y);
+        return p;
+    }*/
+    
+};
+
+class Rect {
+    Point p1, p2;   //멤버변수 값 지정x
+public:
+    Rect(Point pp1, Point pp2) :p1(pp1), p2(pp2) {} //생성자 멤버 초기화 리스트, 변수(값)->직접 초기화
+    //Rect() {} //멤버 변수 p1,p2에 어떤 값도 들어가있지 않아서 오류
+    Rect() :p1(0, 0), p2(0, 0) {}       // main에서 Rect r1; 가능
+
+    int area() {
+        int x = p1.getx() - p2.getx();
+        int y = p1.gety() - p2.gety();
+        return abs(x * y);
+    }
+    int getx() { return abs(p1.x - p2.x); }
+    int gety() { return abs(p1.y - p2.y); }
+    void setP1(Point p) { p1 = p; }
+    void setP2(Point p) { p2 = p; }
+    Point getp1() { return p1; }
+    Point getp2() { return p2; }
+
+};
+
+void func1(Rect *r);
+void func2(Rect& r);
+
+//Point클래스, Rect클래스 은닉  --> 생성자는 알려져 있음
+//Rect클래스의 area함수 존재
+//대각선 길이 구하는 함수 필요 --> Rect를 상속받아 대각선 길이 구하는 함수가 있는 클래스 만들기
+
+class RectEx : public Rect{        //Rect클래스 상속 받기 - private이 default
+    //상속 시,생성자 소멸자는 상속x --> 즉, 해당 클래스 자체의 생성자,소멸자 따로 필요
+public:
+    /*
+    RectEx(Point pp1, Point pp2)    //:p1(pp1),p2(pp2) 불가능 --> 따라서 Rect에 setp함수 필요
+    {
+        setP1(pp1); setP2(pp2);     // 방법 1
+    }*/
+    RectEx(Point pp1, Point pp2) : Rect(pp1, pp2){ }   //방법 2
+
+    double dist() {
+
+        //int x= p1.x-p2.x;     //멤버변수 p1,p2는 Rect클래스의 private이므로 오류
+        //--> 이런 private변수 접근 위한 내부 함수(getx(), gety()) Rect클래스에 잇어야
+        int x = getx();
+        int y = gety();
+        return sqrt(x * x + y * y);
+    }
+};
+
+class Circle: public Rect{
+    //면적, 지름, 원의 둘레,
+    double r;
+    Point cp;       //원의 중심
+
+public:
+    Circle(Point pp1, Point pp2) :Rect(pp1, pp2), cp(0,0), r(0) { 
+        cp.setx((pp1.x + pp2.x) / 2);       //나누기 2 결과는 int타입x --> point타입 double로 바꿔야
+        cp.sety((pp1.y + pp2.y) / 2);
+        int x = getx();
+        int y = gety();
+        r=sqrt(x * x + y * y)/2;    
+    }
+    //Point변수는 초기화 안하면 오류뜸
+    //r은 상관없네..?
+
+    Point center() {
+        Point p1 = getp1();
+        Point p2 = getp2();
+        return Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+    }
+
+    double diameter() {  return r * 2; }    // 지름
+    double cLen() { return 2 * M_PI * r; }   // 둘레
+    double area() {  return M_PI * r * r; }  // 면적  
+    //Rect에도 같은 이름의 함수 있어서 바꿔주는 게 좋다
+    
+};
+
+
+int main()
+{
+    /*
+    int num1 = 21;
+    int &num2 = num1;   //참조형 변수
+    cout << num2 << endl;
+    cout << &num1 << " " << &num2 << endl;
+
+    num2 = 10;
+    cout << num1<<endl;     //같이 바뀜
+
+    int x = 10;
+    int y = 20;
+    swap(x, y);
+    cout << x;
+
+    //Rect r1;        // 멤버변수 값 지정해줘야 오류 안뜸
+    Point p1{ 10,10 };      //유니폼 초기화 방식
+    Point p2{ 20,20 };
+    Rect r1{ p1,p2 };
+    cout<<r1.area();
+    //func1(&r1);
+
+    Point p1{ 10,10 };
+    Point p2{ 20,20 };
+    Rect r1{ p1,p2 };
+   
+
+    Circle c1(p1, p2);
+    cout << "원의 중심: (" << c1.center().x << ", " << c1.center().y << ")" << endl;
+    //Point cc = c1.center();
+    cout << "원주율: " << M_PI << endl;
+    cout << "면적: " << c1.area() << endl;    //circle클래스에 area함수 지우면 rect의 함수값 나옴
+    cout << "둘레: " << c1.cLen() << endl;
+    cout << "지름: " << c1.diameter() << endl;
+    */
+    Point p1;       //p1 = (0,0)
+    cout << p1.getx() <<" " << p1.gety() << endl;
+    p1 = p1+3;      //p1=(3,3)
+    cout << p1.getx() << " " << p1.gety() << endl;
+    
+    Point p2(10, 10);
+    Point p3 = p2 + p1;
+    cout << p3.getx() << " " << p3.gety() << endl;
+    cout << (p2 + p1).x;
+
+}
+
+
+void func1(Rect* r) { cout << r->area(); }//포인터 변수로 받으면
+
+void func2(Rect& r) { cout << r.area(); }
+
+void swap(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
