@@ -15,7 +15,6 @@
     * 보통 프로젝트명으로 
     * ::(범위 지정 연산자)기호로 구분,  중첩가능(계층 구조)
     * using을 이용한 namespace: “이름::”명시 없이 사용 가능
-
 * 함수
   * 함수 오버로딩(Function Overloading)
     * 함수 호출 시, 함수이름과 전달되는 인자의 정보로 함수 결정 → 매개변수 선언 달리해서 같은 이름의 함수 정의 가능
@@ -24,7 +23,6 @@
     * int func(int a=1, int b=2, int c)	//이런 경우는 x ⇒ 오른쪽 부터 값 채워주는건 가능
     * 함수의 선언에서만
   * inline키워드: 컴파일러에 의해 처리되며 매크로 함수의 장점은 취하고 단점 보완한 것
-
 * class(C++) ← struct(C) 
     * 구조체 등장 배경: 연관있는 데이터 하나로 묶으면 프로그램의 구현 및 관리 용이
     * 구조체 vs 클래스 : 매번 typedef 필요 → 필요x해짐 / 내부에 함수 삽입 불가→ 가능
@@ -47,6 +45,25 @@
   * 클래스 내부 함수(private)로 멤버변수에 접근하기 위한 get, set 함수 필요 
   * 상속하는 클래스의 생성자는 상속받는 클래스의 멤버변수에 대해서도 초기화(?)해줘야
     * >ex) Rect 상속받는 RectEx의 생성자 : RectEx(Point pp1, Point pp2):Rect(pp1,pp2){ } 
-
 * 연산자 오버로딩
 ex) Point p1(10,10); p1+3;   // error!
+### 3강 
+* MFC(microsoft foundation class): microsoft Foundation Class: 윈도우 os가 제공하는 다양한 기능의 API함수들을 기능별로 클래스화 한 형태로 만든 것
+  * 진입점: wWinMain(C++도스 프로그램의 시작점: main함수)
+    * hInstance: 현재 실행되고 있는 프로그램의 핸들		/ hPrevinstance
+    * nCmdShow: 윈도우를 보여주는 형태의 플래그	/ IpCmdLine
+  * 윈도우즈 프로그래밍에서 event driven → message라는 표현
+  * 무한루프로 메세지계속 받음 
+  * 리소스 파일 .rc
+    * string table → App_Title의 캡션으로 창 타이틀 이름 바꿀 수 o(전역문자열)
+* SDK 프로그램 : sw development kit, 라이브러리
+  * sdk프로그램 동작 원리
+    * 시스템 영역: 이벤트 발생(마우스,키보드, 네트워크(웨이팅), 타이머 등) 내용들을 시스템 메시지큐에 저장→ 여러 개의 메세지 큐에 나눠저장
+    * 프로그래머: 메시지 처리
+* CString
+: c++에서 제공하는 문자열 처리 클래스
+MakeUpper()
+* MSDN사이트에서 모르는거 찾아보면서 하기 → 모르느거 드래그 후 F1키
+→ 어떤 함수로 활용할 지 모를 때도!(Ex) 입력란의 문자열 가져오기-> 입력란 클릭후f1
+* ctrl+F: 문자열찾기
+
