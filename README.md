@@ -47,7 +47,7 @@
     * >ex) Rect 상속받는 RectEx의 생성자 : RectEx(Point pp1, Point pp2):Rect(pp1,pp2){ } 
 * 연산자 오버로딩
 ex) Point p1(10,10); p1+3;   // error!
-### 3강 
+### 3강 MFC
 * MFC(microsoft foundation class): microsoft Foundation Class: 윈도우 os가 제공하는 다양한 기능의 API함수들을 기능별로 클래스화 한 형태로 만든 것
   * 진입점: wWinMain(C++도스 프로그램의 시작점: main함수)
     * hInstance: 현재 실행되고 있는 프로그램의 핸들		/ hPrevinstance
@@ -66,4 +66,28 @@ MakeUpper()
 * MSDN사이트에서 모르는거 찾아보면서 하기 → 모르느거 드래그 후 F1키
 → 어떤 함수로 활용할 지 모를 때도!(Ex) 입력란의 문자열 가져오기-> 입력란 클릭후f1
 * ctrl+F: 문자열찾기
+### 4강 MFC
+* MFC
+    * 클래스 뷰: 클래스 파일, 솔루션탐색기와는 다름
+    * .rc: resource file  / accelerator: 핫키들 / Icon:
+  * CFile클래스: CObject상속 받는 MFC파일 클래스의 기본 클래스
+    * CFile경로 또는 파일 핸들에서 개체 생성
+    * Open(): 오류테스트 옵션을 사용하여 파일을 안전하게 엶
+    * Read(): 현재 파일 위치에서 버퍼링 되지않은 데이터 읽기
+    * >ex) f.Read(buf,f.GetLength());
+    * Close(): 파일 닫고 개체 삭제
+    * GetLength(): 파일 길이 검색
+    * 기본 파일 액세스 모드: CFile::modeRead(읽기 전용)
+  * CFileDialog: 파일 열기 또는 저장작업에 사용되는 일반 대화 상자를 캡슐화
 
+* 다이얼로그 클래스 생성 및 메뉴로 연결
+    * dialog클래스에서 이벤트에 대한 처리 루틴들 정의
+    * 가상함수 중 OnInitDialog 에서 초기화  → 이 함수에서 폰트만들고 적용하면 됨
+    * GetDlgItem(ID) ⇒ 반환 타입: CWnd → 클래스 포인터로 반환 → 하위 클래스인 대화상자나 컨트롤바 등으로 강제형변환 가능 → SetFont부터해서 거의 대부분 활용 가능
+    * SetWindowTextW:(L“문자열”): 캡션?을 문자열로 
+
+* 그림 그리기
+  * 다이얼로그에서 클래스 마법사 만들기의 메시지 이용
+    * LBUTTONDBLCLK- 마우스 왼쪽 더블 클릭 / LBUTTONDOWN 왼쪽 누름/ LBUTTONUP
+  * CStatic포인터: 윈도우즈 정적 컨트롤의 기능 제공
+  * CDC(): Device Context Pointer
