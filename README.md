@@ -1,4 +1,4 @@
-# IoT216
+# IoT216 - C++ / C#
 ### C++ 1강
 * Object Oriented Programming
 * IDE - Editor, Compiler, Linking + Debugging
@@ -91,3 +91,31 @@ MakeUpper()
     * LBUTTONDBLCLK- 마우스 왼쪽 더블 클릭 / LBUTTONDOWN 왼쪽 누름/ LBUTTONUP
   * CStatic포인터: 윈도우즈 정적 컨트롤의 기능 제공
   * CDC(): Device Context Pointer
+### 5강 C#
+* 변수
+    * char: 2Byte
+    * string: 문자열 자료형, CString과 유사하나 훨씬 편함
+  * 자료형 변환 메소드
+    * Parse: 문자열 → 숫자형 	/  문자열 → 불 ⇒ 변수명.Parse(x), int.Parse(o)
+    * ToString(): 다른자료형 → 문자열
+* var키워드, is키워드..이런게 있다..
+
+    * 닷넷 플랫폼+클래스라이브러리 => 닷넷 프레임워크 ⇒ exe+dll
+    * 닷넷3.5이상: 여러 응용
+
+* 닷넷 프레임 워크 windowformsapp
+  * .cs파일: form1.cs  /  form1.Designer.cs
+  * 이벤트 처리: caller, event arguments로 전달받음
+  * dialog의 텍스트박스로 파일 불러오기
+    * openFileDialog추가하기
+    * DialogResult ret = 다이얼로그명.ShowDialog();	//???
+    * StreamReader → using System.IO; / new StreamReader(openFileDialog.FileName); / 반드시 close
+
+  * 수정한 내용 해당 파일로 저장하기
+    * savefileDialog 추가
+    * 위와 거의 동일, saveFileDialog1.FileName;	//파일의 full path
+    * StreamWriter  → 반드시 close
+  * 콤보 내용 다른 곳에서 보려면 속성; private→ public, text도 
+
+  * 새로운 다이얼로그(frm2)연결 시 그 폼을 ok로 닫은 경우에만 실행 원할 때
+    * if (frm2.ShowDialog() == DialogResult.OK)
