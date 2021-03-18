@@ -8,99 +8,83 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using myLibrary;
 
-namespace WindowsFormsApp1
+namespace WindowsFormsEdit
 {
     public partial class Form1 : Form
     {
-        int status = 0;
-
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)  //object sender: caller,
+        private void mnuFileOpen_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            if (status==0)
+            DialogResult ret = openFileDialog1.ShowDialog();   //==DoModal() (C++)
+            if (ret == DialogResult.OK)
             {
-                btn_Test.Text = "버튼테스트 1";
-                status = 1;
+                string fName = openFileDialog1.FileName;    //full path, openFileDialog.SafeFileName;  // file name only
+                StreamReader sr = new StreamReader(fName);  //FILE* (C), CFile(c++)
+                tb1.Text = sr.ReadToEnd();
+                //Form1.ActiveForm.Text =fName;
+                sr.Close();
+                string[] arr = fName.Split('\\');      //char[], 백슬래시 이므로 한번 더 써줘야
+                //Form1.ActiveForm.Text = arr[arr.Length-1].Split('.')[0]; 
+                //this.Text= arr[arr.Length - 1].Split('.')[0];   //현재 폼==this로 접근 가능
+                int n = myLib.Count('\\', fName);
+                this.Text += myLib.GetToken(n, '\\', fName);
+                Font f = tb1.Font;
+                sbLabel1.Text = f.Name;
+                sbLabel2.Text = f.Size.ToString();
             }
-            else
-            {
-                btn_Test.Text = "버튼테스트 2";
-                status = 0;
-            }
-
         }
-
-        private void btnFileOpen_Click(object sender, EventArgs e)
+        private void font_display()
         {
-            DialogResult ret = openFileDialog1.ShowDialog();
-            if (ret == DialogResult.Cancel) return; //파일이 선택되지 않으면 리턴
-
-            string fName = openFileDialog1.FileName;
-            StreamReader sr = new StreamReader(fName);
-            string buf = sr.ReadToEnd();
-            textBox1.Text = buf;
-            sr.Close();
+            sbLabel1.Text = tb1.Font.Name;
+            sbLabel2.Text = $"{tb1.Font.Size}";
         }
-
-        private void btnFileSave_Click(object sender, EventArgs e)
+        private void mnuFileSave_Click(object sender, EventArgs e)
         {
-            DialogResult ret = saveFileDialog1.ShowDialog();
-            if (ret == DialogResult.Cancel) return; //파일이 선택되지 않으면 리턴
-
-            string fName = saveFileDialog1.FileName;    //fullpath
+            DialogResult ret = saveFileDialog1.ShowDialog();        //호출, 생성
+            string fName = saveFileDialog1.FileName;
             StreamWriter sw = new StreamWriter(fName);
-
-            sw.Write(textBox1.Text);
+            if (ret == DialogResult.Cancel) return;
+            sw.Write(tb1.Text);
             sw.Close();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void mnuViewFont_Click(object sender, EventArgs e)
         {
+            DialogResult ret = fontDialog1.ShowDialog();
+            if (ret == DialogResult.Cancel) return;
 
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnConvert_Click(object sender, EventArgs e)
-        {
-            string src = tb1.Text;      
-            string target = src.ToUpper(); //대문자로 바꾼 복사본 되돌릴 뿐 원본 그대로
-
-            tb2.Text = target;
-            //tb3.Text = src.Length.ToString();
-            //string etc = src.Length.ToString(); //c++ CString에서 숫자를 문자형으로 바꿀때 번거로웠음-> str.Format("%d",src.Length());
-            //string etc = "문자열 길이는 "+src.Length+"입니당.";
-            string etc = $"문자열의 길이는 {src.Length}입니당.";   //보간문자열 - 매번 +로 연결하지 않고 괄호안에, "--> \"로 써야 
             
-            
-            tb3.Text = etc;
-
+            Font f = fontDialog1.Font;
+            tb1.Font = f;
+            font_display();
+            /*
+            sbLabel1.Text = f.Name;
+            sbLabel2.Text = f.Size.ToString();
+            */
         }
 
-        private void btnCall_Click(object sender, EventArgs e)
+        private void mnuFileNew_Click(object sender, EventArgs e)
         {
-            Form2 frm2 = new Form2();   //new키워드로 반드시 생성자 호출해서 초기값 지정해야 아래 수행가능
-            if (frm2.ShowDialog() == DialogResult.OK)
-            {
-                textBox2.Text = frm2.cb1.Text+"\n\r";
-                
-                //"\n"만으로는 줄바꿈 안됨 --> "\r\n"
-                
-            }
+            tb1.Text = "";
         }
 
+
+        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tb1.WordWrap) tb1.WordWrap = false;
+            else tb1.WordWrap = true;
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            font_display();
+        }
     }
 }
