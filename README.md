@@ -131,6 +131,6 @@ MakeUpper()
     * FileName: full path → 문자열 형태이므로 문자열 split으로 추출해 활용 가능
     * SafeFileName: only file name
 * 클래스
-    * namespace안에 클래스 내용 기술 //using [namespace명];
+    * namespace안에 클래스 내용 기술 //using [namespace명]; --> 해당 내용들만 다른 프로젝트에서 using 통해 사용 
     * static : 인스턴스 메서드와 달리 클래스로부터 객체를 생성하지 않고 직접 [클래스명.메서드명] 형식으로 호출하는 메서드	
     * public - 사용 위해서 바꿔줘야
