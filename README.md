@@ -119,3 +119,18 @@ MakeUpper()
 
   * 새로운 다이얼로그(frm2)연결 시 그 폼을 ok로 닫은 경우에만 실행 원할 때
     * if (frm2.ShowDialog() == DialogResult.OK)
+### 6강 C#
+* 닷넷 프레임워크
+    * ms사에서 제공하는 윈도우 프로그램 개발 및 실행환경
+    * 네트워크 작업, 인터페이스 등의 여러 작업들 캡슐화하여 코딩의 효율성 증대
+    * 등장 배경: 자바의 장점 수용위해 C#과
+* 속성
+    * anchor: 닻 - 창에 고정시킬 면 지정 가능
+    * wordwrap: 자동 줄바꿈 
+* 도구 - 다이얼로그 사용 시 반드시 ShowDialog()로 호출 및 생성 먼저
+    * FileName: full path → 문자열 형태이므로 문자열 split으로 추출해 활용 가능
+    * SafeFileName: only file name
+* 클래스
+    * namespace안에 클래스 내용 기술 //using [namespace명];
+    * static : 인스턴스 메서드와 달리 클래스로부터 객체를 생성하지 않고 직접 [클래스명.메서드명] 형식으로 호출하는 메서드	
+    * public - 사용 위해서 바꿔줘야
