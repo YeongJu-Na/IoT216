@@ -12,7 +12,7 @@ using myLibrary;
 
 namespace WindowsFormsEdit
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form       //메모장 기능 구현
     {
         public Form1()
         {
