@@ -134,3 +134,19 @@ MakeUpper()
     * namespace안에 클래스 내용 기술 //using [namespace명]; --> 해당 내용들만 다른 프로젝트에서 using 통해 사용 
     * static : 인스턴스 메서드와 달리 클래스로부터 객체를 생성하지 않고 직접 [클래스명.메서드명] 형식으로 호출하는 메서드	
     * public - 사용 위해서 바꿔줘야
+### 7강 C#
+* 메서드
+  * textbox 클래스
+    * SelectionLength / SelectedText / SelectionStart - 선택영역 관련
+    * ScrollToCaret  //MFC의 caret: 콘솔의 커서와 같은 개념, 다음 문자열이나 그래픽이 삽입될 위치
+  * string 메서드: 대부분 원본 불변 → 따라서 변경 내용을 복사해서 반환할 뿐이다
+    * indexOf
+* 속성
+  * shortcutkey =단축키=hotkey
+  * tooltiptext: 풍선도움말 표시 - ctrl+enter
+  * messagebox : messagebox.show(“”);   
+* graphic
+    * contextmenustrip: popup menu
+    * picturebox에서 속성으로 contextmenustrip추가 시 우클릭하면 저절로 팝업됨
+    * 번개표시: event function  / 창 두개: 열거형(enum)  / 연결그림: class
+  * eclipse → x1,y1,x2,y2 두 점으로 rectangular그려서 그안의 원 → x1,x2를 중심으로 하는 원을 그리고 싶으면 offset을 더해주면 됨 → x1-x2/2, y1-y2/2, x2,y2
