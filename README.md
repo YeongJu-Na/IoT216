@@ -150,3 +150,18 @@ MakeUpper()
     * picturebox에서 속성으로 contextmenustrip추가 시 우클릭하면 저절로 팝업됨
     * 번개표시: event function  / 창 두개: 열거형(enum)  / 연결그림: class
   * eclipse → x1,y1,x2,y2 두 점으로 rectangular그려서 그안의 원 → x1,x2를 중심으로 하는 원을 그리고 싶으면 offset을 더해주면 됨 → x1-x2/2, y1-y2/2, x2,y2
+### 8강 C#
+* 펜 그리기 - 마우스 왼쪽 버튼 누르는 동안 그림 그리기
+    * MouseDown: 시작위치(Point p1) 저장(e.X, e.Y), 마우스drawing이라는 상태 true로 
+    * MouseMove: 종료위치(Point p2) 저장 후 그리기(GDC.DrawLine(pp,po1, po2))--> po2를 다시 po1(새로운 start)
+    * MouseUp: drawing상태 false로
+
+* DB
+  * DB Engine- oracle/ MS-SQL/ MySQL
+  * SELECT(속성명) FROM(테이블 명/시트 명) WHERE(조건) / GROUP BY (HAVING)/ORDER BY
+    * 컬럼이름 변경하기: SELECT 속성명 AS ’별칭’  / SELECT ‘속성명’ =’별칭’
+  * JOIN
+* DB - windowsForm(.NET framwork) 
+  * 도구상자 - DataGridView(이름: dbgrid) 
+    * dbgrid.Columns.Add(속성명, 헤더텍스트)
+    * dbgrid.Rows.Add()
