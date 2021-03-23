@@ -1,4 +1,4 @@
-# IoT216 - C++ / C#
+# IoT216 - C++ / C# / DB(sql)
 ### C++ 1강
 * Object Oriented Programming
 * IDE - Editor, Compiler, Linking + Debugging
@@ -165,3 +165,35 @@ MakeUpper()
   * 도구상자 - DataGridView(이름: dbgrid) 
     * dbgrid.Columns.Add(속성명, 헤더텍스트)
     * dbgrid.Rows.Add()
+### 9강 C#/DB(SQL)
+* DataGridView
+  * excel파일→ csv → txt파일 가져오기(쉼표로 구분됨)
+    * OpenFileDialog 생성(new) → dialogResult ok일때만, streamReader로 받기
+    * 무한루프 : while(1)안됨 ⇒ while(true)
+  * 값 넣기 
+    * 각 셀 행, 열 인덱스 0부터 
+    * 속성값 추가: dbgrid.Columns.Add(str,str);, 이후 row줄 추가 없이 값 넣으면 에러
+    * 1개 줄(행) 만들기: dbgrid.Rows.Add();  //추가한 행의 값 반환!
+    * 값 넣기: dbgrid.Rows[행인덱스].Cells[열인덱스].Value = 값(str);
+    * 위 두 줄을 한번에 가능: dbgrid.Rows.Add(str.split(‘,’));	//
+* 데이터베이스 파일 만들기
+  * azure: ms에서 제공하는 클라우드 서비스 - 매우비쌈 연결 주의
+    * 클라우드: Amazon - AWS
+  * 서버탐색기 - 데이터 연결 - DB만들기 (속성-연결문자열)
+  * 필드 - 속성 차이?	/레코드 -튜플? → 물리 db/ 논리db 차이?
+  * 데이터타입 
+    * nchar: db에서 표준 캐릭터 형은 x(표준은 varchar())
+    * bigint: int(32bit- 2^32= 2^2x2^30= 대략4기가(2^10은 ~1k))
+* DB파일 접근  
+  * SqlConnection클래스 객체 생성 → 오류→ 잠재적 수정?사항 표시 
+    *sqlCon.ConnectionsString = @“연결문자열"  // 연결문자열(경로)내 이스케이프 표시 무시
+  * SqlCommand클래스 객체 생성  → sql명령어 처리기
+    * sqlcmd.Connection = sqlCon;
+    * sqlcmd.CommandText= tb.Text;	//텍스트박스 tb에 작성한 sql문 명령텍스트로 넣기
+    * sqlcmd.ExecuteNonQuery()    // Select 문 제외, 리턴 값 없음 →commandtext내용 실행
+    > 잘못된 SQL문 등 문제 발생 시 예외 발생 → try~catch로 예외 처리 필요
+    * sqlCon.Open();   //연결 후 열기 → 리턴 void → 성공/실패(timeout) 알 수 없다
+* 예외 처리 
+  * try{수행 내용} catch(){수행 중 해당 예외 발생 시 }
+* splitContainer : 해당 패널 안에 텍스트 박스, 등 넣음 → 두 패널 사이에 스플릿바로 영역 움직일 수 o
+  * orientation: 두 패널 가로 or 세로
