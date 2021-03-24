@@ -197,3 +197,40 @@ MakeUpper()
   * try{수행 내용} catch(){수행 중 해당 예외 발생 시 }
 * splitContainer : 해당 패널 안에 텍스트 박스, 등 넣음 → 두 패널 사이에 스플릿바로 영역 움직일 수 o
   * orientation: 두 패널 가로 or 세로
+### 10강 C#/DB(SQL)
+* SQL - DML
+  * 삽입: insert into 테이블명 values(속성1값, ~~)
+  * 수정: update 테이블명 set 속성명=속성값 (where 조건)
+  * 삭제: delete 테이블명 where 조건
+
+--> 아래 예시들: 코드 내 sql문 처리에 대한 예시(ex) sqlCommand
+* Connection 객체: 데이터 소스와 물리적 연결
+  * 메소드: 연결의 open, close, db변경 및 트랜잭션 관리
+* Command 객체: 데이터 입력/수정/삭제 등 모든 명령 처리
+    * 데이터 소스와 dataset과의 통신을 위해 DataAdapter객체가 command객체 사용
+    > SqlCommand comm = new SqlCommand();  comm.Connection = sqlCon; //comm.CommandText = cmdTxt;
+    > SqlCommand comm = new SqlCommand(cmdTxt, sqlCon);
+  * ExecuteNonQuery: 명령어 실행  → select문 외
+  * ExecuteReader: 명령어를 connection통해 보내고 sqlDataReader 바인딩
+    * > SqlDataReader(sdr): sdr = sqlcmd.ExecuteReader();
+* DataReader 객체: 윈폼, 웹폼에서 DB쿼리를 통해 얻은 결과를 출력
+    * command객체의 ExecuteReader 메소드로만 객체 생성
+    * 쿼리의 전체 결과가 반환될때까지 기다리지x, 사용가능 시 바로 → 시스템 오버헤드 ↓
+    * > SqlDataReader(sdr): sdr = sqlcmd.ExecuteReader();
+    * sdr.Read(): 다음 레코드로 이동 >(ex) for(int i = 0; sdr.Read(); i++)  //다음행true인동안
+    * sdr.FieldCount(): 행의 열 수 반환
+    * sdr.GetName(int i): i번째 열의 이름 반환→ 속성 이름인듯?
+    * sdr.GetValue(int i): i번째 열의 값 반환
+
+* 라이브러리 : 솔루션(우클릭) → 추가(새 프로젝트) → class library 만들기
+    * 사용자 정의 클래스 만들기/작성 후 빌드→ 현프로젝트에서 참조 추가 -찾아보기 →  bin/ debug/ dll파일 추가
+  * > 발생 오류: 여기에 종속되어 있는 파일이나 어셈블리 중 하나를 로드할 수 없습니다.
+  * > 해결: 클래스 생성할 때 default로 되있던 .net core 3.1 ==>  .net standard
+
+* 예외 처리
+  * SqlException
+  * InvalidOperationException
+
+* 텍스트박스 - 엔터키 입력 시 이전 줄 sql명령어로 
+  * keyDown속성 >  if(e.keyCode != Keys.Enter)
+    * 엔터로 split → 여기에 string(“\r\n”)은 구분자로 불가능⇒ \n으로 구분 후 
