@@ -234,3 +234,19 @@ MakeUpper()
 * 텍스트박스 - 엔터키 입력 시 이전 줄 sql명령어로 
   * keyDown속성 >  if(e.keyCode != Keys.Enter)
     * 엔터로 split → 여기에 string(“\r\n”)은 구분자로 불가능⇒ \n으로 구분 후 
+
+### 11강 C#/DB(SQL)
+* foreach제어문
+    * for루프와 거의 같으나 인덱스없이 iterate?
+    * foreach(int x in arr)
+    * > foreach(DataRow row in table.Rows){ foreach(DataColumn col in table.Columns){~
+* winForm
+    * dbgrid.Rows[i].Cells[j].Value는 object타입(비정형) → 명시적 형변환으로 변환o
+    * sqlCon.GetSchema()   //DB구조, DataTable이라는 타입으로 반환(row단위로)
+    * statusbar → dropdownitems 목록 
+  * DataSet
+    * 여러개의 DataTable포함 → 메모리상의 간이db같은 개념
+  * DataTable 클래스: 메모리상에 테이블을 표현하는 클래스
+    * DataSet.Tables컬렉션에 포함되어 사용하는 경우 많음
+* SQL
+  * Create: create table 테이블명( 속성명1 속성타입1, ~~~)
