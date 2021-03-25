@@ -95,7 +95,6 @@ namespace WindowsFormsDBManager
                 DialogResult ret = openFileDialog1.ShowDialog();
                 if (ret == DialogResult.Cancel) return;
                 string fName = openFileDialog1.FileName;
-               
                 string[] ss = conn.Split(';');
                 //string s1 = $"{ss[1]}{fName}";
                 //SqlConnection sqlCon = new SqlConnection();
@@ -107,9 +106,15 @@ namespace WindowsFormsDBManager
                 sbFileName.Text = openFileDialog1.SafeFileName;
                 sbFileName.BackColor = Color.Green;
                 sbPanel1.Text = "success";           //발생 없을 시 
-                sbPanel1.BackColor = Color.Green;       
-                
+                sbPanel1.BackColor = Color.Green;
                 //sql command에서 sql문으로 
+
+                DataTable dt=sqlCon.GetSchema("Tables");
+                for(int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string s = dt.Rows[i].ItemArray[2].ToString();
+                    sbButton1.DropDownItems.Add(s);
+                }
 
             }
             catch(Exception ee)
@@ -133,7 +138,7 @@ namespace WindowsFormsDBManager
                 {               //select문일 때 --> 해당하는 결과를 dbgrid에 표시하기 위함
                     SqlDataReader sdr = sqlcmd.ExecuteReader();
                     tableName = GetToken(3, ' ', sql);
-                    
+
                     dbGrid.Rows.Clear();            //이전 결과 삭제
                     dbGrid.Columns.Clear();
                     
@@ -165,7 +170,6 @@ namespace WindowsFormsDBManager
                     sqlcmd.ExecuteNonQuery();
                 }
                 
-                
                 sbPanel1.Text = "Success";
                 sbPanel1.BackColor = Color.AliceBlue;
             }
@@ -191,12 +195,6 @@ namespace WindowsFormsDBManager
         {
             string sql = tbsql.Text;
             runSql(sql);
-
-            /*
-            sqlcmd.CommandText = sql;
-            sqlcmd.ExecuteNonQuery();   //select문 제외 , 리턴값 x
-            */
-            //sqlcmd.ExecuteReader();
 
         }
 
@@ -235,12 +233,12 @@ namespace WindowsFormsDBManager
 
         private void tbsql_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            /*
             if (e.KeyCode != Keys.Enter) return;
             string str = tbsql.Text;
             string[] sArr = str.Split('\n');
             runSql(sArr[sArr.Length - 1].Trim());
-            
+            */
         }
 
         private void dbGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -260,13 +258,80 @@ namespace WindowsFormsDBManager
                     {
                         string tn = tableName;
                         string fn = dbGrid.Columns[j].HeaderText;   //속성
-                        string ct = (string) dbGrid.Rows[i].Cells[j].Value;
+                        object ct = dbGrid.Rows[i].Cells[j].Value; //object타입(비정형)
+                        //Value.GetType
                         string kn = dbGrid.Columns[0].HeaderText;
-                        string kt = (string)dbGrid.Rows[i].Cells[0].Value;
+                        object kt = dbGrid.Rows[i].Cells[0].Value;
                         string sql = $"update {tn} set {fn}={ct} where {kn}={kt}";
                         runSql(sql);
                     }
                 }
+            }
+        }
+
+        private void sbButton1_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            sbButton1.Text = e.ClickedItem.Text;
+            runSql($"select * from {e.ClickedItem.Text}");
+        }
+
+        private void rowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dbGrid.Rows.Add();
+        }
+
+        private void columnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddCol dlg = new AddCol("input column name");
+            if (dlg.ShowDialog() == DialogResult.Cancel) return;
+            
+            //sqlcmd.CommandText = $"alter table {sbButton1.Text} add {dlg.colname} varchar(20)";
+            //dlg.colname
+            string s = dlg.colname;
+                dbGrid.Columns.Add(s, s);
+        }
+
+        private void database닫기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sqlCon.Close();
+            sbButton1.DropDownItems.Clear();
+        }
+
+        private void dbGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void saveNewTableToolStripMenuItem_Click(object sender, EventArgs e)    //새로운 테이블 생성하기
+        {
+            MakeNewTable dlg = new MakeNewTable();
+            if (dlg.ShowDialog() == DialogResult.Cancel) return;
+            string tname = dlg.TblName;         //해당 테이블 명으로 create
+            string sql = $"create table {tname}(";
+
+            for(int i = 0; i < dbGrid.Columns.Count; i++)
+            {
+                sql += $"{dbGrid.Columns[i].HeaderText} nchar(20)";
+                if (i != dbGrid.Columns.Count - 1) sql += ", ";
+                else sql += ")";
+            }
+            runSql(sql);
+            
+            
+            string insertStr;
+
+            for(int i = 0; i < dbGrid.Rows.Count; i++)
+            {
+                insertStr = $"insert into {tname} values(";
+                
+                for(int j = 0; j < dbGrid.Columns.Count; j++)
+                {
+                    insertStr += $"{dbGrid.Rows[i].Cells[j].Value}";
+                    if (j< dbGrid.Columns.Count - 1) insertStr += ", ";
+                }
+                
+                insertStr += ")";
+                runSql(insertStr);
             }
         }
     }
