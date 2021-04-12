@@ -1,0 +1,10 @@
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\bin\Debug\DBManager.exe.config
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\bin\Debug\DBManager.exe
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\bin\Debug\DBManager.pdb
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.csprojAssemblyReference.cache
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.Form1.resources
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.Properties.Resources.resources
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.csproj.GenerateResource.cache
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.csproj.CoreCompileInputs.cache
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.exe
+C:\Users\KOSTA\source\repos\IoT-216_prac\DBManager\DBManager\obj\Debug\DBManager.pdb
