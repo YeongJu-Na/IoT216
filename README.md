@@ -250,3 +250,8 @@ MakeUpper()
     * DataSet.Tables컬렉션에 포함되어 사용하는 경우 많음
 * SQL
   * Create: create table 테이블명( 속성명1 속성타입1, ~~~)
+### Final Practice 
+Mission:
+데이터베이스 생성 및 연결 - sqlConnection, sqlCommand
+텍스트박스를 통해 sql문 받고 실행 - ExecuteNonQuery(), ExecuteReader()
+질의문(select)결과를 DataGridView에 나타내기
